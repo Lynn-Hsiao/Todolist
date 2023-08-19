@@ -1,33 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getTodos } from '../api/todos';
 import { Footer, Header, TodoCollection, TodoInput } from 'components';
 import { prettyDOM } from '@testing-library/react';
 
-const dummyTodos = [
-  {
-    title: 'Learn react-router',
-    isDone: true,
-    id: 1,
-  },
-  {
-    title: 'Learn to create custom hooks',
-    isDone: false,
-    id: 2,
-  },
-  {
-    title: 'Learn to use context',
-    isDone: true,
-    id: 3,
-  },
-  {
-    title: 'Learn to implement auth',
-    isDone: false,
-    id: 4,
-  },
-];
-
 const TodoPage = () => {
   const [inputValue, setInputValue] = useState('');
-  const [todos, setTodos] = useState(dummyTodos);
+  const [todos, setTodos] = useState([]);
 
   const handleChange = (value) => {
     setInputValue(value);
@@ -120,6 +98,19 @@ const TodoPage = () => {
       return prevTodos.filter((todo) => todo.id !== id);
     });
   };
+
+  useEffect(() => {
+    const getTodosAsync = async () => {
+      try {
+        const todos = await getTodos();
+
+        setTodos(todos.map((todo) => ({ ...todo, isEdit: false })));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getTodosAsync();
+  }, []);
 
   return (
     <div>

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const baseUrl = 'http://localhost/3001';
 
-const getTodos = async () => {
+export const getTodos = async () => {
   try {
     const res = await axios.get(`${baseUrl}/todos`);
 
@@ -12,7 +12,7 @@ const getTodos = async () => {
   }
 };
 
-const createTodo = async (payload) => {
+export const createTodo = async (payload) => {
   try {
     const { title, isDone } = payload;
     const res = await axios.patch(`${baseUrl}/todos`, {
@@ -26,6 +26,6 @@ const createTodo = async (payload) => {
   }
 };
 
-const patchTodo = () => {};
+export const patchTodo = () => {};
 
-const deleteTodo = () => {};
+export const deleteTodo = () => {};
