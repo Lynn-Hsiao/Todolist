@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getTodos } from '../api/todos';
+import { getTodos, createTodo } from '../api/todos';
 import { Footer, Header, TodoCollection, TodoInput } from 'components';
 import { prettyDOM } from '@testing-library/react';
 
@@ -11,42 +11,63 @@ const TodoPage = () => {
     setInputValue(value);
   };
 
-  const handleAddTodo = () => {
+  const handleAddTodo = async () => {
     if (inputValue.length === 0) {
       return;
     }
-
-    setTodos((prevTodos) => {
-      return [
-        ...prevTodos,
-        {
-          id: Math.random() * 100,
-          title: inputValue,
-          isDone: false,
-        },
-      ];
-    });
-    // 新增完之後，需要清空 inputValue
-    setInputValue('');
+    try {
+      //先去後端拿資料
+      const data = await createTodo({
+        title: inputValue,
+        isDone: false,
+      });
+      //將拿回的data資料傳入畫面(data.id/data.title/data.isDone, 原始後端資料屬性沒有isEdit的狀態，在這也先建立預設false並存入)
+      setTodos((prevTodos) => {
+        return [
+          ...prevTodos,
+          {
+            id: data.id,
+            title: data.title,
+            isDone: data.isDone,
+            isEdit: false,
+          },
+        ];
+      });
+      // 新增完之後，需要清空 inputValue
+      setInputValue('');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const handleKeyDown = () => {
+  const handleKeyDown = async () => {
     if (inputValue.length === 0) {
       return;
     }
 
-    setTodos((prevTodos) => {
-      return [
-        ...prevTodos,
-        {
-          id: Math.random() * 100,
-          title: inputValue,
-          isDone: false,
-        },
-      ];
-    });
-    // 新增完之後，需要清空 inputValue
-    setInputValue('');
+    try {
+      //先去後端拿資料
+      const data = await createTodo({
+        title: inputValue,
+        isDone: false,
+      });
+      //將拿回的data資料傳入畫面(data.id/data.title/data.isDone, 原始後端資料屬性沒有isEdit的狀態，在這也先建立預設false並存入)
+      setTodos((prevTodos) => {
+        return [
+          ...prevTodos,
+          {
+            id: data.id,
+            title: data.title,
+            isDone: data.isDone,
+            isEdit: false,
+          },
+        ];
+      });
+      // 新增完之後，需要清空 inputValue
+      setInputValue('');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleToggleDown = (id) => {
@@ -102,8 +123,9 @@ const TodoPage = () => {
   useEffect(() => {
     const getTodosAsync = async () => {
       try {
+        //畫面渲染後，從後端拿到todos項目
         const todos = await getTodos();
-
+        //將todos資料傳回頁面，原始後端資料屬性沒有isEdit的狀態，在這也先建立預設false並存入
         setTodos(todos.map((todo) => ({ ...todo, isEdit: false })));
       } catch (error) {
         console.error(error);
