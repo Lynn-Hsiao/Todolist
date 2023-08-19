@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import styled from 'styled-components';
 
 const StyledAddTodoContainer = styled.div`
@@ -58,6 +59,8 @@ const StyledAddTodoActionContainer = styled.div`
     font-size: 13px;
     color: var(--major);
     padding-right: 5px;
+    border: none;
+    background-color: transparent;
     display: none;
   }
 
@@ -82,10 +85,10 @@ const TodoInput = ({ inputValue, onChange, onKeyDown, onAddTodo }) => {
           }}
         />
       </StyledInputContainer>
-      <StyledAddTodoActionContainer>
-        <button className="btn-reset" onClick={() => onAddTodo?.()}>
-          新增
-        </button>
+      <StyledAddTodoActionContainer
+        className={clsx('', { active: inputValue.length > 0 })}
+      >
+        <button onClick={() => onAddTodo?.()}>新增</button>
       </StyledAddTodoActionContainer>
     </StyledAddTodoContainer>
   );
