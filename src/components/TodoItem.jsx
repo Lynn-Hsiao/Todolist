@@ -1,3 +1,5 @@
+// Download "npm i clsx@1.2.1"
+import clsx from 'clsx';
 import styled from 'styled-components';
 import {
   CheckActiveIcon,
@@ -102,7 +104,8 @@ const StyledTaskItem = styled.div`
 
 const TodoItem = ({ todo, onToggleDone, onSave, onDelete, onChangeMode }) => {
   return (
-    <StyledTaskItem>
+    // clsx('初始className', {新的className:boolean值})
+    <StyledTaskItem className={clsx('', { done: todo.isDone })}>
       <div className="task-item-checked">
         <span className="icon icon-checked" />
       </div>
