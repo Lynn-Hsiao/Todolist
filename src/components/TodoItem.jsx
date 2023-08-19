@@ -100,7 +100,7 @@ const StyledTaskItem = styled.div`
   }
 `;
 
-const TodoItem = () => {
+const TodoItem = ({ todo, onToggleDone, onSave, onDelete, onChangeMode }) => {
   return (
     <StyledTaskItem>
       <div className="task-item-checked">
