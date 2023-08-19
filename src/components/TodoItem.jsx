@@ -1,5 +1,6 @@
 // Download "npm i clsx@1.2.1"
 import clsx from 'clsx';
+import { useRef } from 'react';
 import styled from 'styled-components';
 import {
   CheckActiveIcon,
@@ -103,6 +104,17 @@ const StyledTaskItem = styled.div`
 `;
 
 const TodoItem = ({ todo, onToggleDone, onSave, onDelete, onChangeMode }) => {
+  const inputRef = useRef(null);
+
+  const handleKeyDown = (event) => {
+    if (inputRef.current.value.length > 0 && event.key === 'Enter') {
+      onSave?.({ id: todo.id, title: inputRef.current.value });
+    }
+    if (event.key === 'Escape') {
+      onChangeMode?.({ id: todo.id, isEdit: false });
+    }
+  };
+
   return (
     // clsx('初始className', {新的className:boolean值})
     <StyledTaskItem
@@ -123,7 +135,12 @@ const TodoItem = ({ todo, onToggleDone, onSave, onDelete, onChangeMode }) => {
         }}
       >
         <span className="task-item-body-text">{todo.title}</span>
-        <input className="task-item-body-input" value={todo.title} />
+        <input
+          ref={inputRef}
+          className="task-item-body-input"
+          defaultValue={todo.title}
+          onKeyDown={handleKeyDown}
+        />
       </div>
       <div className="task-item-action ">
         <button className="btn-reset btn-destroy icon"></button>
