@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'http://localhost/3001';
+const baseUrl = 'http://localhost:3001';
 
 export const getTodos = async () => {
   try {
@@ -13,9 +13,9 @@ export const getTodos = async () => {
 };
 
 export const createTodo = async (payload) => {
+  const { title, isDone } = payload;
   try {
-    const { title, isDone } = payload;
-    const res = await axios.patch(`${baseUrl}/todos`, {
+    const res = await axios.post(`${baseUrl}/todos`, {
       title,
       isDone,
     });
