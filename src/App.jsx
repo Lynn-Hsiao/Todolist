@@ -1,7 +1,7 @@
-import { LoginPage } from 'pages';
 import './App.scss';
+//Need to download "npm i react-router-dom@6.4.1"
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { TodoPage, LoginPage, SignUpPage } from './pages';
+import { HomePage, TodoPage, LoginPage, SignUpPage } from './pages';
 
 function App() {
   return (
