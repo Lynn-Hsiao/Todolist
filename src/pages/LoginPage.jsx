@@ -9,6 +9,7 @@ import {
 import { ACLogoIcon } from 'assets/images';
 import { AuthInput } from 'components';
 import { login } from '../api/auth';
+import Swal from 'sweetalert2';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -28,7 +29,22 @@ const LoginPage = () => {
     });
     if (success) {
       localStorage.setItem('authToken', authToken);
+      Swal.fire({
+        title: '登入成功',
+        icon: 'success',
+        showConfirmButton: false,
+        time: 1000,
+        position: 'top',
+      });
+      return;
     }
+    Swal.fire({
+      title: '登入失敗',
+      icon: 'error',
+      showConfirmButton: false,
+      time: 1000,
+      position: 'top',
+    });
   };
 
   return (
