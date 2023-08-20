@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   AuthContainer,
@@ -6,9 +6,9 @@ import {
   AuthButton,
   AuthLinkText,
 } from 'components/common/auth.styled';
-import { ACLogoIcon } from 'assets/images';
+import { ACLogoIcon, CheckActiveIcon } from 'assets/images';
 import { AuthInput } from 'components';
-import { register } from '../api/auth';
+import { register, checkPermission } from '../api/auth';
 import Swal from 'sweetalert2';
 
 const SignUpPage = () => {
@@ -53,6 +53,21 @@ const SignUpPage = () => {
       position: 'top',
     });
   };
+
+  useEffect(() => {
+    const checkTokenIsValid = async () => {
+      const authToken = localStorage.getItem('authToken');
+      if (!authToken) {
+        return;
+      }
+      const result = await checkPermission(authToken);
+      if (result) {
+        navigate('/todo');
+      }
+    };
+
+    checkTokenIsValid();
+  }, [navigate]);
 
   return (
     <AuthContainer>
