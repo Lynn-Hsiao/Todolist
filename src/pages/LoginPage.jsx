@@ -37,7 +37,7 @@ const LoginPage = () => {
         time: 1000,
         position: 'top',
       });
-      navigate('/todos');
+      navigate('/todo');
       return;
     }
     Swal.fire({
