@@ -70,7 +70,7 @@ const TodoPage = () => {
     }
   };
 
-  const handleToggleDown = (id) => {
+  const handleToggleDone = (id) => {
     setTodos((prevTodos) => {
       return prevTodos.map((todo) => {
         if (todo.id === id) {
@@ -114,7 +114,7 @@ const TodoPage = () => {
     });
   };
 
-  const handleDelete = ({ id }) => {
+  const handleDelete = (id) => {
     setTodos((prevTodos) => {
       return prevTodos.filter((todo) => todo.id !== id);
     });
@@ -146,7 +146,7 @@ const TodoPage = () => {
       />
       <TodoCollection
         todos={todos}
-        onToggleDone={handleToggleDown}
+        onToggleDone={handleToggleDone}
         onChangeMode={handleChangeMode}
         onSave={handleSave}
         onDelete={handleDelete}

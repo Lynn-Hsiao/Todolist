@@ -146,7 +146,7 @@ const TodoItem = ({ todo, onToggleDone, onSave, onDelete, onChangeMode }) => {
         <button
           className="btn-reset btn-destroy icon"
           onClick={() => {
-            onDelete?.({ id: todo.id });
+            onDelete?.(todo.id);
           }}
         ></button>
       </div>
