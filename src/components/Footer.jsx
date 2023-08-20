@@ -32,7 +32,7 @@ const StyledButton = styled.button`
   }
 `;
 
-const Footer = () => {
+const Footer = ({ todos }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -42,7 +42,7 @@ const Footer = () => {
 
   return (
     <StyledFooter>
-      <p>剩餘項目數： 0</p>
+      <p>剩餘項目數：{todos.length}</p>
       <StyledButton onClick={handleClick}>登出</StyledButton>
     </StyledFooter>
   );
