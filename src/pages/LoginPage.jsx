@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   AuthContainer,
   AuthInputContainer,
@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleClick = async () => {
     if (username.length === 0) {
@@ -36,6 +37,7 @@ const LoginPage = () => {
         time: 1000,
         position: 'top',
       });
+      navigate('/todos');
       return;
     }
     Swal.fire({
